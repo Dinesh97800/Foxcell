@@ -7,7 +7,7 @@ const tabs = [
   {
     id: 'tv',
     title: 'TV & Streaming',
-    icon: <Tv className="w-6 h-6 text-red-600" />,
+    icon: <Tv className="w-6 h-6 text-[#fe8900]" />,
     heading: 'Get TV Streaming With Your Internet Service',
     desc: 'NetBand is the world’s leading broadband provider — enjoy seamless TV streaming along with ultrafast internet.',
     stats: [
@@ -24,7 +24,7 @@ const tabs = [
   {
     id: 'internet',
     title: 'Fast Internet',
-    icon: <Wifi className="w-6 h-6 text-red-600" />,
+    icon: <Wifi className="w-6 h-6 text-[#fe8900]" />,
     heading: 'Blazing Fast Internet Anytime',
     desc: 'Experience high-speed internet with no interruptions. Perfect for work, streaming, and gaming.',
     stats: [
@@ -36,7 +36,7 @@ const tabs = [
   {
     id: 'mobile',
     title: 'All For Mobile',
-    icon: <Smartphone className="w-6 h-6 text-red-600" />,
+    icon: <Smartphone className="w-6 h-6 text-[#fe8900]" />,
     heading: 'Internet On The Go',
     desc: 'Enjoy strong and secure mobile internet anywhere, anytime.',
     stats: [
@@ -61,7 +61,7 @@ export default function FeatureTabs() {
               key={tab.id}
               onClick={() => setActive(tab.id)}
               className={`flex flex-col items-center justify-center p-6 rounded-xl shadow transition ${
-                active === tab.id ? 'bg-red-600 text-white' : 'bg-white'
+                active === tab.id ? 'bg-[#fe8900] text-white' : 'bg-white'
               }`}
             >
               <div
@@ -106,8 +106,8 @@ export default function FeatureTabs() {
 
             {/* Text */}
             <div>
-              <p className="uppercase text-red-600 font-semibold tracking-wider mb-2">
-                About NetBand
+              <p className="uppercase text-[#fe8900] font-semibold tracking-wider mb-2">
+                About Foxcell
               </p>
               <h2 className="text-3xl font-bold mb-4 text-gray-800">
                 {current.heading}
@@ -144,7 +144,7 @@ export default function FeatureTabs() {
                             cy={radius}
                           />
                           <circle
-                            stroke="#dc2626" /* Tailwind red-600 */
+                            stroke="#fe8900" /* Tailwind red-600 */
                             fill="transparent"
                             strokeWidth={stroke}
                             strokeLinecap="round"
@@ -164,7 +164,7 @@ export default function FeatureTabs() {
                             y="50%"
                             dominantBaseline="middle"
                             textAnchor="middle"
-                            className="text-lg font-bold fill-red-600"
+                            className="text-lg font-bold fill-[#fe8900]"
                           >
                             {s.value}
                           </text>
@@ -182,7 +182,7 @@ export default function FeatureTabs() {
                 <ul className="space-y-2 mb-6">
                   {current?.list?.map((item, i) => (
                     <li key={i} className="flex items-center text-gray-700">
-                      <span className="w-5 h-5 flex items-center justify-center rounded-full bg-red-600 text-white text-xs mr-3">
+                      <span className="w-5 h-5 flex items-center justify-center rounded-full bg-[#fe8900] text-white text-xs mr-3">
                         ✓
                       </span>
                       {item}
@@ -192,10 +192,10 @@ export default function FeatureTabs() {
 
                 {/* ✅ Buttons */}
                 <div className="flex gap-4">
-                  <button className="px-6 py-3 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition">
+                  <button className="px-6 py-3 bg-[#fe8900] text-white rounded-lg shadow hover:bg-red-700 transition">
                     Learn More
                   </button>
-                  <button className="px-6 py-3 bg-gray-100 text-gray-800 rounded-lg shadow hover:bg-gray-200 transition">
+                  <button className="px-6 py-3 bg-gray-300 text-gray-800 rounded-lg shadow hover:bg-gray-200 transition">
                     Get Started
                   </button>
                 </div>
