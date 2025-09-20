@@ -93,7 +93,7 @@ export default function Navbar() {
           ) : (
             <Menu
               size={28}
-              className={scrolled ? "text-gray-700" : "text-white"}
+              className={"text-[#fe8900]"}
             />
           )}
         </button>
@@ -113,7 +113,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className={`text-lg ${
                 activeSection === link.id
-                  ? "text-[#2563eb] font-semibold"
+                  ? "text-[#fe8900] font-semibold"
                   : scrolled
                   ? "text-gray-700"
                   : "text-white"

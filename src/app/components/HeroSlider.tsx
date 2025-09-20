@@ -5,6 +5,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import FancyButton from "./UI/Button";
 
 const slides = [
   {
@@ -55,7 +56,7 @@ export default function HeroSlider() {
               {/* Text above overlay */}
               <div className="relative container mx-auto px-6 md:px-12 z-10">
                 <div className="text-left max-w-2xl">
-                  <p className="text-brand font-semibold text-lg">
+                  <p className="text-brand font-semibold text-white text-lg">
                     Best Solution
                   </p>
                   <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight drop-shadow-lg">
@@ -73,9 +74,7 @@ export default function HeroSlider() {
 
                   {/* CTA Buttons */}
                   <div className="mt-8 flex items-center gap-6">
-                    <button className="bg-brand hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-md shadow-lg transition relative z-20">
-                      Explore More →
-                    </button>
+                    <FancyButton>Explore More →</FancyButton>
                     <button className="flex items-center gap-2 text-white hover:text-brand transition relative z-20">
                       <span className="w-12 h-12 rounded-full border-2 border-brand flex items-center justify-center">
                         ▶

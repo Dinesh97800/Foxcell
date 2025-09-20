@@ -1,5 +1,6 @@
 // src/components/LiveSports.tsx
-import { CheckCircle, Award, Headphones } from 'lucide-react';
+import { CheckCircle, Award, Headphones } from "lucide-react";
+import Image from "next/image";
 
 export default function LiveSports() {
   return (
@@ -21,11 +22,15 @@ export default function LiveSports() {
           </div>
 
           {/* Main Image */}
-          <img
-            src="https://netband-react.vercel.app/assets/img/feature/trusted.jpg"
-            alt="Live Sports"
-            className="object-cover w-[71%] h-full"
-          />
+          <div className="relative w-full h-96">
+            <Image
+              src="https://netband-react.vercel.app/assets/img/feature/trusted.jpg"
+              alt="Live Sports"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg"
+            />
+          </div>
         </div>
 
         {/* Right Content */}
@@ -58,11 +63,12 @@ export default function LiveSports() {
           {/* Features List */}
           <ul className="mt-6 space-y-2">
             <li className="flex items-center gap-2 text-gray-700">
-              <CheckCircle className="w-5 h-5 text-[#fe8900]" /> 100 Mbps YouTube
+              <CheckCircle className="w-5 h-5 text-[#fe8900]" /> 100 Mbps
+              YouTube
             </li>
             <li className="flex items-center gap-2 text-gray-700">
-              <CheckCircle className="w-5 h-5 text-[#fe8900]" /> Connect Multiple
-              Users
+              <CheckCircle className="w-5 h-5 text-[#fe8900]" /> Connect
+              Multiple Users
             </li>
           </ul>
 
@@ -86,7 +92,7 @@ export default function LiveSports() {
             <div className="w-full bg-gray-200 h-2 rounded">
               <div
                 className="bg-[#fe8900] h-2 rounded"
-                style={{ width: '75%' }}
+                style={{ width: "75%" }}
               ></div>
             </div>
             <p className="text-right text-sm font-bold text-[#fe8900]">75%</p>
