@@ -13,11 +13,11 @@ import PricingPlans from "@/app/components/Pricing";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Preloader from "./components/UI/Preloader";
+import { usePathname } from "next/navigation";
 
 const slides = [
   {
-    image:
-      "./banner1.png",
+    image: "./banner1.png",
     title: "Get Fast Internet Solution",
     price: "$99 / Month",
     subtitle: "Ultra Fast internet",
@@ -39,22 +39,32 @@ const slides = [
 ];
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
+  const pathname = usePathname();
 
-    const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   // Hide loader after 2 seconds
+  //   const timer = setTimeout(() => setLoading(false), 2000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   useEffect(() => {
-    // Hide loader after 2 seconds
-    const timer = setTimeout(() => setLoading(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if(loading) return <Preloader />
+    // Only show loader if NOT contact-us or about
+    if (pathname !== "/contact-us" && pathname !== "/about") {
+      const timer = setTimeout(() => setLoading(false), 2000);
+      return () => clearTimeout(timer);
+    } else {
+      setLoading(false);
+    }
+  }, [pathname]);
+  
+  if (loading) return <Preloader />;
 
   return (
     <>
       {/* <Banner /> */}
       <Navbar />
-      <HeroSlider slides={slides}/>
+      <HeroSlider slides={slides} />
       <FeatureTabs />
       {/* <About /> */}
       <BestNetwork />
