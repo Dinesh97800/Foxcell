@@ -1,3 +1,5 @@
+"use client";
+
 import BestNetwork from "@/app/components/BestNetwork";
 import Brands from "@/app/components/Brands";
 import BroadbandCta from "@/app/components/CtaSection";
@@ -9,13 +11,50 @@ import LiveSports from "@/app/components/LiveSports";
 import Navbar from "@/app/components/Navbar";
 import PricingPlans from "@/app/components/Pricing";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import Preloader from "./components/UI/Preloader";
+
+const slides = [
+  {
+    image:
+      "./banner1.png",
+    title: "Get Fast Internet Solution",
+    price: "$99 / Month",
+    subtitle: "Ultra Fast internet",
+  },
+  {
+    image:
+      "https://modinatheme.com/html/netband-html/assets/img/hero/hero-2.jpg",
+    title: "Unlimited Entertainment",
+    price: "$79 / Month",
+    subtitle: "Internet + TV + More",
+  },
+  {
+    image:
+      "https://modinatheme.com/html/netband-html/assets/img/hero/hero-3.jpg",
+    title: "Stay Connected Everywhere",
+    price: "$59 / Month",
+    subtitle: "Reliable & Affordable",
+  },
+];
 
 export default function Home() {
+
+    const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Hide loader after 2 seconds
+    const timer = setTimeout(() => setLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if(loading) return <Preloader />
+
   return (
     <>
-     <Navbar />
       {/* <Banner /> */}
-      <HeroSlider/>
+      <Navbar />
+      <HeroSlider slides={slides}/>
       <FeatureTabs />
       {/* <About /> */}
       <BestNetwork />

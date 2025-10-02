@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -32,10 +33,12 @@ export default function Navbar() {
   }, []);
 
   const links = [
-    { id: "home", label: "Home" },
+    { id: "home", label: "Home", route: '/' },
     { id: "features", label: "Features" },
     { id: "pricing", label: "Pricing" },
     { id: "faq", label: "FAQ" },
+    { id: "about", label: "About", route: "/about" },
+    { id: "contact-us", label: "Contact Us", route: "/contact-us" },
   ];
 
   return (
@@ -57,8 +60,8 @@ export default function Navbar() {
         <ul className="hidden md:flex space-x-8 font-medium">
           {links.map((link) => (
             <li key={link.id}>
-              <a
-                href={`#${link.id}`}
+              <Link
+                href={link.route ? link.route : `/#${link.id}`}
                 className={`transition-colors ${
                   activeSection === link.id
                     ? "text-[#fe8900] font-semibold"
@@ -68,7 +71,20 @@ export default function Navbar() {
                 }`}
               >
                 {link.label}
-              </a>
+              </Link>
+
+              {/* <a
+                href={`${link.route ? link.route : `#${link.id}`}`}
+                className={`transition-colors ${
+                  activeSection === link.id
+                    ? "text-[#fe8900] font-semibold"
+                    : scrolled
+                    ? "text-gray-700 hover:text-[#fe8900]"
+                    : "text-gray hover:text-[#fe8900]"
+                }`}
+              >
+                {link.label}
+              </a> */}
             </li>
           ))}
         </ul>
@@ -91,10 +107,7 @@ export default function Navbar() {
           {menuOpen ? (
             <X size={28} className={scrolled ? "text-gray" : "text-gray"} />
           ) : (
-            <Menu
-              size={28}
-              className={"text-[#fe8900]"}
-            />
+            <Menu size={28} className={"text-[#fe8900]"} />
           )}
         </button>
       </div>
@@ -102,9 +115,7 @@ export default function Navbar() {
       {/* Mobile Dropdown */}
       {menuOpen && (
         <div
-          className={`md:hidden flex flex-col items-center space-y-4 py-6 ${
-            scrolled ? "bg-white shadow" : "bg-[#2563eb]"
-          }`}
+          className={`md:hidden flex flex-col items-center space-y-4 py-6 bg-white shadow`}
         >
           {links.map((link) => (
             <a
@@ -114,9 +125,7 @@ export default function Navbar() {
               className={`text-lg ${
                 activeSection === link.id
                   ? "text-[#fe8900] font-semibold"
-                  : scrolled
-                  ? "text-gray-700"
-                  : "text-white"
+                  : "text-gray-700"
               }`}
             >
               {link.label}
