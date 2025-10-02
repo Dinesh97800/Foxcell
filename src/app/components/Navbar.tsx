@@ -33,7 +33,7 @@ export default function Navbar() {
   }, []);
 
   const links = [
-    { id: "home", label: "Home", route: '/' },
+    { id: "home", label: "Home", route: "/" },
     { id: "features", label: "Features" },
     { id: "pricing", label: "Pricing" },
     { id: "faq", label: "FAQ" },
@@ -72,19 +72,6 @@ export default function Navbar() {
               >
                 {link.label}
               </Link>
-
-              {/* <a
-                href={`${link.route ? link.route : `#${link.id}`}`}
-                className={`transition-colors ${
-                  activeSection === link.id
-                    ? "text-[#fe8900] font-semibold"
-                    : scrolled
-                    ? "text-gray-700 hover:text-[#fe8900]"
-                    : "text-gray hover:text-[#fe8900]"
-                }`}
-              >
-                {link.label}
-              </a> */}
             </li>
           ))}
         </ul>
@@ -118,18 +105,30 @@ export default function Navbar() {
           className={`md:hidden flex flex-col items-center space-y-4 py-6 bg-white shadow`}
         >
           {links.map((link) => (
-            <a
+            <Link
               key={link.id}
-              href={`#${link.id}`}
+              href={link.route ? link.route : `/#${link.id}`}
               onClick={() => setMenuOpen(false)}
-              className={`text-lg ${
+              className={`transition-colors ${
                 activeSection === link.id
                   ? "text-[#fe8900] font-semibold"
                   : "text-gray-700"
               }`}
             >
               {link.label}
-            </a>
+            </Link>
+            // <a
+            //   key={link.id}
+            //   href={`#${link.id}`}
+            //   onClick={() => setMenuOpen(false)}
+            //   className={`text-lg ${
+            //     activeSection === link.id
+            //       ? "text-[#fe8900] font-semibold"
+            //       : "text-gray-700"
+            //   }`}
+            // >
+            //   {link.label}
+            // </a>
           ))}
         </div>
       )}
