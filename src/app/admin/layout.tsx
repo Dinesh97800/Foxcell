@@ -55,7 +55,6 @@
 //   );
 // }
 
-
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
@@ -78,7 +77,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -107,27 +110,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   // Login page: render only the login form
   if (isLoginPage) {
-    return (
-      <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          {children}
-        </body>
-      </html>
-    );
+    return children;
   }
 
   // Admin dashboard layout: Sidebar + Topbar
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="flex min-h-screen">
-          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          <main className="flex-1 bg-gray-50 p-6 md:p-8 w-full">
-            <Topbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-            {children}
-          </main>
-        </div>
-      </body>
-    </html>
+    <div className="flex min-h-screen">
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <main className="flex-1 bg-gray-50 p-6 md:p-8 w-full">
+        <Topbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        {children}
+      </main>
+    </div>
   );
 }

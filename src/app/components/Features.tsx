@@ -1,58 +1,36 @@
 "use client";
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Tv, Wifi, Smartphone } from "lucide-react";
+import { Tv, Wifi, Smartphone, CloudCog } from "lucide-react";
 import FancyButton from "./UI/Button";
+import { getFeatures } from "src/api/services/featureService";
 
-const tabs = [
-  {
-    id: "tv",
-    title: "TV & Streaming",
-    icon: <Tv className="w-6 h-6 text-[#fe8900]" />,
-    heading: "Get TV Streaming With Your Internet Service",
-    desc: "NetBand is the world’s leading broadband provider — enjoy seamless TV streaming along with ultrafast internet.",
-    stats: [
-      { value: "88%", label: "Free Installation Ultrafast Connect" },
-      { value: "93%", label: "Real Technology Solutions" },
-    ],
-    list: [
-      "Professional Team Member",
-      "Awards Winning Internet Solutions Company",
-      "Awards Winning Internet Solutions Company",
-    ],
-    image: "https://netband-react.vercel.app/assets/img/about/about.jpg",
-  },
-  {
-    id: "internet",
-    title: "Fast Internet",
-    icon: <Wifi className="w-6 h-6 text-[#fe8900]" />,
-    heading: "Blazing Fast Internet Anytime",
-    desc: "Experience high-speed internet with no interruptions. Perfect for work, streaming, and gaming.",
-    stats: [
-      { value: "95%", label: "High-Speed Network Coverage" },
-      { value: "90%", label: "Trusted by 1K+ Brands" },
-    ],
-    image: "https://netband-react.vercel.app/assets/img/about/about.jpg",
-  },
-  {
-    id: "mobile",
-    title: "All For Mobile",
-    icon: <Smartphone className="w-6 h-6 text-[#fe8900]" />,
-    heading: "Internet On The Go",
-    desc: "Enjoy strong and secure mobile internet anywhere, anytime.",
-    stats: [
-      { value: "85%", label: "Mobile Device Optimization" },
-      { value: "92%", label: "Global Roaming Ready" },
-    ],
-    image: "https://netband-react.vercel.app/assets/img/about/about.jpg",
-  },
-];
-
+const iconMap: Record<string, JSX.Element> = {
+  tv: <Tv className="w-6 h-6 text-[#fe8900]" />,
+  internet: <Wifi className="w-6 h-6 text-[#fe8900]" />,
+  mobile: <Smartphone className="w-6 h-6 text-[#fe8900]" />,
+};
 export default function FeatureTabs() {
-  const [active, setActive] = useState("tv");
-  const current: any = tabs.find((t) => t.id === active);
+  const [tabs, setTabs] = useState([]);
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    const fetchTabs = async () => {
+      try {
+        const data = await getFeatures();
+        if (data.length > 0) setActive(data[0].id);
+        setTabs(data);
+      } catch (error) {
+        console.error("Error fetching tabs:", error);
+      }
+    };
+    fetchTabs();
+  }, []);
+  const current = tabs.find((t) => t.id === active);
 
+  if (!current)
+    return <div className="text-center py-20">Loading features...</div>;
+  
   return (
     <section id="features" className="py-16 sm:py-20 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -71,7 +49,7 @@ export default function FeatureTabs() {
                   active === tab.id ? "bg-white" : "bg-gray-100"
                 }`}
               >
-                {tab.icon}
+                {iconMap[tab.icon] || <Tv className="w-6 h-6 text-[#fe8900]" />}
               </div>
               <p
                 className={`font-semibold text-center ${
@@ -98,7 +76,7 @@ export default function FeatureTabs() {
             <div className="relative w-full max-w-lg mx-auto md:mx-0">
               <div className="absolute -top-6 -left-6 w-full h-full rounded-lg bg-red-100 shadow-lg"></div>
               <img
-                src={current.image}
+                src={current.image_url}
                 alt={current.title}
                 className="relative rounded-lg shadow-xl z-10 w-full h-auto"
               />
@@ -180,7 +158,10 @@ export default function FeatureTabs() {
               {/* List Items */}
               <ul className="space-y-2 mb-6">
                 {current?.list?.map((item: any, i: number) => (
-                  <li key={i} className="flex items-center text-gray-700 text-sm sm:text-base">
+                  <li
+                    key={i}
+                    className="flex items-center text-gray-700 text-sm sm:text-base"
+                  >
                     <span className="w-5 h-5 flex items-center justify-center rounded-full bg-[#fe8900] text-white text-xs mr-3">
                       ✓
                     </span>

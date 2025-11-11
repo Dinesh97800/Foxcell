@@ -7,11 +7,31 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import FancyButton from "./UI/Button";
 
-export default function HeroSlider({ slides }) {
+interface Slide {
+  image: string;
+  title: string;
+  titleColor?: string;
+  subtitle: string;
+  subtitleColor?: string;
+  price: string;
+  priceColor?: string;
+  button?: {
+    label: string;
+    bgColor?: string;
+    textColor?: string;
+    target_link?: string;
+  };
+}
+
+interface HeroSliderProps {
+  slides: Slide[];
+}
+
+export default function HeroSlider({ slides }: HeroSliderProps) {
   return (
     <section className="relative w-full h-[90vh]">
       <Swiper
-        modules={[Autoplay, Pagination]}
+        modules={[Autoplay, Pagination, Navigation]}
         autoplay={{ delay: 4000 }}
         loop
         navigation
@@ -29,29 +49,31 @@ export default function HeroSlider({ slides }) {
                 <div className="absolute inset-0 bg-[#030011] opacity-75"></div>
               </div>
 
-              {/* Text above overlay */}
+              {/* Text content */}
               <div className="relative container mx-auto px-6 md:px-12 z-10">
                 <div className="text-left max-w-2xl">
-                  <p
-                    className="text-brand font-semibold text-lg"
-                    style={{ color: slide.titleColor || "#ffffff" }}
-                  >
-                    Best Solution
-                  </p>
                   <h1
                     className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-lg"
                     style={{ color: slide.titleColor || "#ffffff" }}
                   >
                     {slide.title}
                   </h1>
-                  <div className="mt-6 flex items-baseline gap-2">
-                    <span className="text-4xl font-bold text-white">
+
+                  <div className="mt-4 flex items-baseline gap-2">
+                    <span
+                      className="text-4xl font-bold"
+                      style={{ color: slide.priceColor || "#ffffff" }}
+                    >
                       {slide.price.split(" ")[0]}
                     </span>
-                    <span className="text-white text-lg">
+                    <span
+                      className="text-lg"
+                      style={{ color: slide.priceColor || "#ffffff" }}
+                    >
                       {slide.price.split(" ").slice(1).join(" ")}
                     </span>
                   </div>
+
                   <p
                     className="mt-2"
                     style={{ color: slide.subtitleColor || "#ffffff" }}
@@ -59,21 +81,18 @@ export default function HeroSlider({ slides }) {
                     {slide.subtitle}
                   </p>
 
-                  {/* CTA Buttons */}
-                  <div className="mt-8 flex items-center gap-6">
-                    <FancyButton>Explore More →</FancyButton>
-                    <button
-                      className="flex items-center gap-2 hover:text-brand transition relative z-20"
-                      style={{
-                        color:
-                          slide?.buttons?.length > 1
-                            ? slide.buttons[1].bgColor
-                            : "#ffffff",
-                      }}
-                    >
-                      Read more
-                    </button>
-                  </div>
+                  {/* CTA Button */}
+                  {slide?.button && (
+                    <div className="mt-8">
+                      <FancyButton
+                        color={slide.button.bgColor || "#fe8900"}
+                        textColor={slide.button.textColor || "#ffffff"}
+                        action={slide?.button?.target_link ?? ""}
+                      >
+                        {slide.button.label}
+                      </FancyButton>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

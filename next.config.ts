@@ -9,7 +9,21 @@ const nextConfig = {
         port: '',
         pathname: '/assets/img/feature/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '5000',
+        pathname: '/uploads/**',
+      },
     ],
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/uploads/:path*',      // frontend path
+        destination: 'http://localhost:5000/uploads/:path*', // backend URL
+      },
+    ];
   },
 };
 

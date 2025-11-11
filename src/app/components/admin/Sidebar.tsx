@@ -2,8 +2,15 @@
 "use client";
 import { useState } from "react";
 import { X } from "lucide-react";
+import Link from "next/link";
 
-export default function Sidebar({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean; setSidebarOpen: (open: boolean) => void }) {
+export default function Sidebar({
+  sidebarOpen,
+  setSidebarOpen,
+}: {
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
+}) {
   return (
     <>
       <aside
@@ -13,15 +20,32 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: { sidebarOpen: 
       >
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold">Foxcell</h2>
-          <button className="md:hidden text-white" onClick={() => setSidebarOpen(false)}>
+          <button
+            className="md:hidden text-white"
+            onClick={() => setSidebarOpen(false)}
+          >
             <X className="w-6 h-6" />
           </button>
         </div>
         <nav className="flex flex-col gap-4">
-          <a href="/admin" className="hover:text-red-400">Dashboard</a>
-          <a href="/admin/users" className="hover:text-red-400">Users</a>
-          <a href="/admin/plans" className="hover:text-red-400">Plans</a>
-          <a href="/admin/settings" className="hover:text-red-400">Settings</a>
+          <Link href="/admin" className="hover:text-red-400">
+            Dashboard
+          </Link>
+          <Link href="/admin/Banner" className="hover:text-red-400">
+            Banners
+          </Link>
+          <Link href="/admin/Features" className="hover:text-red-400">
+            Features
+          </Link>
+          <Link href="/admin/users" className="hover:text-red-400">
+            Users
+          </Link>
+          <Link href="/admin/plans" className="hover:text-red-400">
+            Plans
+          </Link>
+          <Link href="/admin/settings" className="hover:text-red-400">
+            Settings
+          </Link>
         </nav>
       </aside>
 

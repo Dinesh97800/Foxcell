@@ -1,25 +1,48 @@
+import { useRouter } from "next/navigation";
 import React from "react";
 
 interface FancyButtonProps {
   children: React.ReactNode;
   isFullWidth?: string;
-  action?: "button" | "submit" | "reset" | (() => void);
+  action?: string | (() => void);
+  color?: string;
+  textColor?: string;
 }
 
 const FancyButton: React.FC<FancyButtonProps> = ({
   children,
   isFullWidth = "",
   action = "button",
+  color = "#fe8900",
+  textColor = "#ffffff",
 }) => {
   const buttonType: "button" | "submit" | "reset" =
-    typeof action === "string" ? action : "button";
-  const handleClick = typeof action === "function" ? action : undefined;
+    action === "submit" ? "submit" : action === "reset" ? "reset" : "button";
+  const router = useRouter();
+  console.log("Button action:", action);
+  const handleClick = () => {
+    if (!action) return;
+
+    if (typeof action === "function") {
+      action();
+    } else if (action.startsWith("http")) {
+      // external link
+      window.location.href = action;
+    } else {
+      // internal Next.js route
+      // router.push(action);
+    }
+  };
 
   return (
     <button
-      className={`relative px-8 py-3 rounded-lg font-semibold text-white bg-[#fe8900] overflow-hidden group ${isFullWidth}`}
+      className={`relative px-8 py-3 rounded-lg font-semibold overflow-hidden group ${isFullWidth}`}
       type={buttonType}
       onClick={handleClick}
+      style={{
+        backgroundColor: color,
+        color: textColor,
+      }}
     >
       {/* Sliding halves */}
       <span className="absolute inset-0 flex">
