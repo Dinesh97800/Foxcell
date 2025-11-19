@@ -1,8 +1,8 @@
 // components/admin/Sidebar.tsx
-"use client";
-import { useState } from "react";
-import { X } from "lucide-react";
-import Link from "next/link";
+'use client';
+import { useState } from 'react';
+import { X } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Sidebar({
   sidebarOpen,
@@ -15,7 +15,7 @@ export default function Sidebar({
     <>
       <aside
         className={`sticky top-0 h-screen w-64 bg-gray-900 text-white p-6 ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >
         <div className="flex items-center justify-between mb-6">
@@ -33,6 +33,9 @@ export default function Sidebar({
           </Link>
           <Link href="/admin/Banner" className="hover:text-red-400">
             Banners
+          </Link>
+          <Link href="/admin/best-network" className="hover:text-red-400">
+            Best Network
           </Link>
           <Link href="/admin/Features" className="hover:text-red-400">
             Features
