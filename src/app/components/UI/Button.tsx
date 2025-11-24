@@ -7,6 +7,7 @@ interface FancyButtonProps {
   action?: string | (() => void);
   color?: string;
   textColor?: string;
+  disabled: boolean
 }
 
 const FancyButton: React.FC<FancyButtonProps> = ({
@@ -15,6 +16,7 @@ const FancyButton: React.FC<FancyButtonProps> = ({
   action = "button",
   color = "#fe8900",
   textColor = "#ffffff",
+  disabled = false
 }) => {
   const buttonType: "button" | "submit" | "reset" =
     action === "submit" ? "submit" : action === "reset" ? "reset" : "button";
@@ -38,6 +40,7 @@ const FancyButton: React.FC<FancyButtonProps> = ({
     <button
       className={`relative px-8 py-3 rounded-lg font-semibold overflow-hidden group ${isFullWidth}`}
       type={buttonType}
+      disabled={disabled}
       onClick={handleClick}
       style={{
         backgroundColor: color,

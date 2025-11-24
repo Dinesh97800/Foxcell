@@ -1,17 +1,87 @@
-import React from "react";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import FancyButton from '../UI/Button';
 import {
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaEnvelope,
-  FaFacebookF,
-  FaTwitter,
-  FaVimeoV,
-  FaPinterestP,
-} from "react-icons/fa";
-import { motion } from "framer-motion";
-import FancyButton from "../UI/Button";
+  getmetaValues,
+  submitContactForm,
+} from 'src/api/services/contactService';
+
+const iconMap: any = {
+  'Nodal officer': (
+    <FaMapMarkerAlt className="mt-1 text-xl" style={{ color: '#fe8900' }} />
+  ),
+  Location: (
+    <FaMapMarkerAlt className="mt-1 text-xl" style={{ color: '#fe8900' }} />
+  ),
+  Phone: <FaPhoneAlt className="mt-1 text-xl" style={{ color: '#fe8900' }} />,
+  Email: <FaEnvelope className="mt-1 text-xl" style={{ color: '#fe8900' }} />,
+};
 
 const Contact = () => {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    message: '',
+    phone: '',
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState('');
+
+  const handleChange = (key: string, value: string) => {
+    setForm({ ...form, [key]: value });
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      await submitContactForm(form);
+      setSuccess('Thank you! We will contact you soon.');
+
+      // Reset form
+      setForm({
+        name: '',
+        email: '',
+        message: '',
+        phone: '',
+      });
+    } catch (error) {
+      alert('Something went wrong! Try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  const [meta, setMeta] = useState<any>({});
+
+  const fetch = async () => {
+    const data = await getmetaValues({
+      value: [1, 2, 3, 4],
+    });
+    setMeta(data);
+  };
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
+  const getSingleValue = (id: number) => {
+    if (!meta[id]) return '';
+    return meta[id].data[0]?.value || '';
+  };
+
+  const getMultipleValues = (id: number) => {
+    if (!meta[id]) return [];
+    return meta[id].data.map((d: any) => ({
+      name: d.name,
+      value: d.value,
+    }));
+  };
+
   return (
     <>
       {/* Hero Section */}
@@ -34,6 +104,7 @@ const Contact = () => {
       {/* Main Content */}
       <section className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-10">
         {/* Contact Info */}
+
         <motion.div
           initial={{ x: -50, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
@@ -46,22 +117,17 @@ const Contact = () => {
           </p>
           <h2 className="text-4xl font-bold">Contact Us</h2>
           <p className="text-gray-600">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque laudantium, totam rem aperiam, eaque
-            inventore.
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem.
           </p>
 
-          {/* Contact Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-lg transition"
             >
               <FaMapMarkerAlt
-                className="mt-1 text-red-600 text-xl"
-                style={{
-                  color: "#fe8900",
-                }}
+                className="mt-1 text-xl"
+                style={{ color: "#fe8900" }}
               />
               <div>
                 <h4 className="font-semibold">Nodal officer</h4>
@@ -74,10 +140,8 @@ const Contact = () => {
               className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-lg transition"
             >
               <FaMapMarkerAlt
-                className="mt-1 text-red-600 text-xl"
-                style={{
-                  color: "#fe8900",
-                }}
+                className="mt-1 text-xl"
+                style={{ color: "#fe8900" }}
               />
               <div>
                 <h4 className="font-semibold">Location</h4>
@@ -90,10 +154,8 @@ const Contact = () => {
               className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-lg transition"
             >
               <FaPhoneAlt
-                className="mt-1 text-red-600 text-xl"
-                style={{
-                  color: "#fe8900",
-                }}
+                className="mt-1 text-xl"
+                style={{ color: "#fe8900" }}
               />
               <div>
                 <h4 className="font-semibold">Phone</h4>
@@ -109,10 +171,8 @@ const Contact = () => {
               className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-lg transition"
             >
               <FaEnvelope
-                className="mt-1 text-red-600 text-xl"
-                style={{
-                  color: "#fe8900",
-                }}
+                className="mt-1 text-xl"
+                style={{ color: "#fe8900" }}
               />
               <div>
                 <h4 className="font-semibold">Email</h4>
@@ -121,6 +181,31 @@ const Contact = () => {
                 <p>support@foxcell.net</p>
               </div>
             </motion.div>
+          </div> */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
+            {Object.values(meta).map((item: any) => (
+              <motion.div
+                key={item.id}
+                whileHover={{ scale: 1.05 }}
+                className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-lg transition"
+              >
+                {/* ICON */}
+                {iconMap[item.type]}
+
+                <div>
+                  <h4 className="font-semibold">{item.type}</h4>
+
+                  {item.data.map((entry: any, idx: number) => (
+                    <div key={idx}>
+                      {entry.name && (
+                        <span className="font-semibold">{entry.name}: </span>
+                      )}
+                      <p>{entry.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
 
@@ -138,13 +223,20 @@ const Contact = () => {
             *
           </p>
 
-          <form className="space-y-4">
+          {success && (
+            <p className="text-green-600 font-semibold mb-4">{success}</p>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block mb-1 font-medium">Your Name*</label>
               <input
                 type="text"
+                value={form.name}
+                onChange={(e) => handleChange('name', e.target.value)}
                 placeholder="Your Name"
                 className="w-full border-b border-gray-300 focus:border-[#fe8900] outline-none py-2 transition"
+                required
               />
             </div>
 
@@ -152,38 +244,53 @@ const Contact = () => {
               <label className="block mb-1 font-medium">Email Address*</label>
               <input
                 type="email"
+                value={form.email}
+                onChange={(e) => handleChange('email', e.target.value)}
                 placeholder="Email Address"
                 className="w-full border-b border-gray-300 focus:border-[#fe8900] outline-none py-2 transition"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block mb-1 font-medium">Phone*</label>
+              <input
+                type="phone"
+                value={form.phone}
+                onChange={(e) => handleChange('phone', e.target.value)}
+                placeholder="Phone Number"
+                className="w-full border-b border-gray-300 focus:border-[#fe8900] outline-none py-2 transition"
+                required
               />
             </div>
 
             <div>
               <label className="block mb-1 font-medium">
-                Enter Your Message
+                Enter Your Message*
               </label>
               <textarea
+                value={form.message}
+                onChange={(e) => handleChange('message', e.target.value)}
                 placeholder="Your Message"
                 className="w-full border-b border-gray-300 focus:border-[#fe8900] outline-none py-2 resize-none transition"
                 rows={4}
+                required
               />
             </div>
 
-            {/* <button
-              type="submit"
-              className="mt-4 bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 flex items-center justify-center transition"
-            >
-              Get In Touch
-            </button> */}
             <FancyButton
-              children="Get In Touch"
+              children={loading ? 'Submitting...' : 'Get In Touch'}
+              disabled ={
+                loading ? true: false
+              }
               isFullWidth="w-full"
               action="submit"
-            ></FancyButton>
+            />
           </form>
         </motion.div>
       </section>
 
-      {/* Full-width Map */}
+      {/* Map */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -191,14 +298,13 @@ const Contact = () => {
         className="w-full h-[400px] md:h-[500px]"
       >
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d109754.92953572572!2d76.7176625689453!3d30.722854622147878!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed0be66ec96b%3A0xa5ff67f9527319fe!2sChandigarh!5e0!3m2!1sen!2sin!4v1443448820352"
+          src="https://www.google.com/maps/embed?pb=!1m18..."
           width="100%"
           height="100%"
           style={{ border: 0 }}
           allowFullScreen
           loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
+        />
       </motion.div>
     </>
   );

@@ -7,10 +7,9 @@ import FaqSection from "@/app/components/Faq";
 import FeatureTabs from "@/app/components/Features";
 import Footer from "@/app/components/Footer";
 import HeroSlider from "@/app/components/HeroSlider";
-import LiveSports from "@/app/components/LiveSports";
+import FeatureShowcaseSection from "@/app/components/FeatureShowcaseSection";
 import Navbar from "@/app/components/Navbar";
 import PricingPlans from "@/app/components/Pricing";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import Preloader from "./components/UI/Preloader";
 import { usePathname } from "next/navigation";
@@ -43,6 +42,7 @@ import { getBanners } from "src/api/services/bannerService";
 //     subtitle: "Reliable & Affordable",
 //   },
 // ];
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Home() {
@@ -71,7 +71,7 @@ export default function Home() {
         label: item.button_label,
         bgColor: item.button_bg_color,
         textColor: item.button_text_color,
-        target_link: item.target_link
+        target_link: item.target_link,
       },
     }));
     setSlides(bannerSlides);
@@ -101,7 +101,7 @@ export default function Home() {
       <FeatureTabs />
       {/* <About /> */}
       <BestNetwork />
-      <LiveSports />
+      <FeatureShowcaseSection/>
       <BroadbandCta />
       <Brands />
       <PricingPlans />

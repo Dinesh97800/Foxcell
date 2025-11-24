@@ -102,7 +102,7 @@ export default function Footer() {
         </div>
 
         {/* Install App */}
-        <div>
+        {/* <div>
           <h4 className="font-semibold mb-4">Install App</h4>
           <p className="text-gray-400 text-sm">From App Store or Google Play</p>
           <div className="flex flex-col sm:flex-row gap-2 mt-3">
@@ -119,7 +119,7 @@ export default function Footer() {
           </div>
           <p className="mt-4 text-gray-400 text-sm">24/7 Support center</p>
           <p className="text-red-500 font-semibold">+1718-904-4450</p>
-        </div>
+        </div> */}
       </div>
 
       {/* Bottom Footer */}

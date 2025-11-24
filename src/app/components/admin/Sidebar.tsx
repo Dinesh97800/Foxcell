@@ -40,8 +40,11 @@ export default function Sidebar({
           <Link href="/admin/Features" className="hover:text-red-400">
             Features
           </Link>
-          <Link href="/admin/users" className="hover:text-red-400">
-            Users
+          <Link href="/admin/feature-showcase" className="hover:text-red-400">
+            Live feature showcase
+          </Link>
+          <Link href="/admin/contact" className="hover:text-red-400">
+            Contact
           </Link>
           <Link href="/admin/plans" className="hover:text-red-400">
             Plans
