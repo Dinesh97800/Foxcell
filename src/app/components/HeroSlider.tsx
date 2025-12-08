@@ -88,6 +88,7 @@ export default function HeroSlider({ slides }: HeroSliderProps) {
                         color={slide.button.bgColor || "#fe8900"}
                         textColor={slide.button.textColor || "#ffffff"}
                         action={slide?.button?.target_link ?? ""}
+                        disabled={false}
                       >
                         {slide.button.label}
                       </FancyButton>

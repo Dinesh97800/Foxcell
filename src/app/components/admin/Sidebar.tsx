@@ -46,11 +46,17 @@ export default function Sidebar({
           <Link href="/admin/contact" className="hover:text-red-400">
             Contact
           </Link>
-          <Link href="/admin/plans" className="hover:text-red-400">
-            Plans
+          <Link href="/admin/faqs" className="hover:text-red-400">
+            Faqs
           </Link>
-          <Link href="/admin/settings" className="hover:text-red-400">
-            Settings
+          <Link href="/admin/subscribers" className="hover:text-red-400">
+            Subscribed Users
+          </Link>
+          {/* <Link href="/admin/plans" className="hover:text-red-400">
+            Plans
+          </Link> */}
+          <Link href="/admin/about" className="hover:text-red-400">
+            About
           </Link>
         </nav>
       </aside>

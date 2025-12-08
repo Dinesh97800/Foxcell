@@ -21,7 +21,7 @@ const FancyButton: React.FC<FancyButtonProps> = ({
   const buttonType: "button" | "submit" | "reset" =
     action === "submit" ? "submit" : action === "reset" ? "reset" : "button";
   const router = useRouter();
-  console.log("Button action:", action);
+
   const handleClick = () => {
     if (!action) return;
 

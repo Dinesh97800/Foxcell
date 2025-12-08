@@ -35,7 +35,8 @@ export default function Navbar() {
   const links = [
     { id: "home", label: "Home", route: "/" },
     { id: "features", label: "Features" },
-    { id: "pricing", label: "Pricing" },
+    // { id: "pricing", label: "Pricing" },
+    { id: "pay-now", label: "Pay now", route: "/payment" },
     { id: "faq", label: "FAQ" },
     { id: "about", label: "About", route: "/about" },
     { id: "contact-us", label: "Contact Us", route: "/contact-us" },

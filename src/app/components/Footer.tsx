@@ -1,10 +1,60 @@
-"use client";
-import { useState } from "react";
-import { FaFacebookF, FaTwitter, FaVimeoV, FaPinterestP } from "react-icons/fa";
-import { IoIosArrowUp } from "react-icons/io";
+'use client';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { FaFacebookF, FaTwitter, FaVimeoV, FaPinterestP } from 'react-icons/fa';
+import { IoIosArrowUp } from 'react-icons/io';
+import api from 'src/api/apiClient';
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubscribe = async () => {
+    if (!email) return alert('Please enter an email');
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const data: any = await api.post('/user/news-letter', { email });
+      if (!data.data) throw new Error('No message returned');
+      setEmail('');
+
+      toast.success(data.data.message, {
+        duration: 2500,
+        style: {
+          background: '#10b981',
+          color: '#fff',
+          fontWeight: 'bold',
+          borderRadius: '8px',
+          padding: '12px 16px',
+        },
+      });
+    } catch (err: any) {
+
+      if (err?.response?.status === 409) {
+        setError('Email already exists.');
+      } else {
+        setError('Subscription failed. Please try again.');
+      }
+
+      toast.error(err.message, {
+        duration: 2500,
+        style: {
+          background: 'red',
+          color: '#fff',
+          fontWeight: 'bold',
+          borderRadius: '8px',
+          padding: '12px 16px',
+        },
+      });
+    }
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  };
 
   return (
     <div className="bg-black text-white">
@@ -22,8 +72,16 @@ export default function Footer() {
             onChange={(e) => setEmail(e.target.value)}
             className="px-4 py-3 rounded-lg sm:rounded-l-lg sm:rounded-r-none w-full sm:w-80 text-black outline-none"
           />
-          <button className="bg-[#fe8900] px-6 py-3 rounded-lg sm:rounded-r-lg sm:rounded-l-none font-semibold hover:bg-black hover:border hover:border-[#fe8900] transition">
-            Subscribe
+          <button
+            disabled={loading || !email}
+            onClick={handleSubscribe}
+            className={`bg-[#fe8900] px-6 py-3 rounded-lg sm:rounded-r-lg sm:rounded-l-none font-semibold transition ${
+              loading
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:bg-black hover:border hover:border-[#fe8900]'
+            } `}
+          >
+            {loading ? 'Please wait...' : 'Subscribe'}
           </button>
         </div>
       </div>
